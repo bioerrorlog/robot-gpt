@@ -1,7 +1,11 @@
 import os
 import cv2
 import openai
+import logging
 from imageai.Detection import ObjectDetection
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
@@ -10,7 +14,7 @@ def capture_image():
     cam = cv2.VideoCapture(0)
     ret, frame = cam.read()
     if not ret:
-        print("Failed to capture image.")
+        logger.error("Failed to capture image.")
         return None
     cam.release()
     cv2.imwrite("captured_image.jpg", frame)
@@ -52,8 +56,8 @@ if __name__ == "__main__":
     image_path = capture_image()
     if image_path:
         objects = recognize_objects(image_path)
-        print("Objects detected:", objects)
+        logger.info(f"Objects detected: {objects}")
         response_message = chat_with_gpt(objects)
-        print("ChatGPT says:", response_message)
+        logger.info(f"ChatGPT says: {response_message}")
     else:
-        print("No image captured.")
+        logger.error("No image captured.")

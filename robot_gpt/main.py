@@ -11,15 +11,15 @@ logger.setLevel(logging.INFO)
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
 
-def capture_image() -> Optional[str]:
+def capture_image(image_filename: str = "captured_image.jpg") -> Optional[str]:
     cam = cv2.VideoCapture(0)
     ret, frame = cam.read()
     if not ret:
         logger.error("Failed to capture image.")
         return None
     cam.release()
-    cv2.imwrite("captured_image.jpg", frame)
-    return "captured_image.jpg"
+    cv2.imwrite(image_filename, frame)
+    return image_filename
 
 
 def recognize_objects(image_path: str) -> List[str]:

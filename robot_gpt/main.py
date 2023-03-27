@@ -3,7 +3,7 @@ import cv2
 import openai
 from imageai.Detection import ObjectDetection
 
-openai.api_key = "your_openai_api_key"
+openai.api_key = os.environ["OPENAI_API_KEY"]
 
 
 def capture_image():

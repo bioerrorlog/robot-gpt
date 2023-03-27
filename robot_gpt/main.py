@@ -2,6 +2,7 @@ import os
 import cv2
 import openai
 import logging
+from typing import List, Optional
 from imageai.Detection import ObjectDetection
 
 logger = logging.getLogger(__name__)
@@ -10,7 +11,7 @@ logger.setLevel(logging.INFO)
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
 
-def capture_image():
+def capture_image() -> Optional[str]:
     cam = cv2.VideoCapture(0)
     ret, frame = cam.read()
     if not ret:
@@ -21,7 +22,7 @@ def capture_image():
     return "captured_image.jpg"
 
 
-def recognize_objects(image_path):
+def recognize_objects(image_path: str) -> List[str]:
     execution_path = os.getcwd()
 
     detector = ObjectDetection()
@@ -36,7 +37,7 @@ def recognize_objects(image_path):
     return [detection["name"] for detection in detections]
 
 
-def chat_with_gpt(objects_list):
+def chat_with_gpt(objects_list: List[str]) -> str:
     prompt = f"objects: {', '.join(objects_list)}"
 
     response = openai.Completion.create(

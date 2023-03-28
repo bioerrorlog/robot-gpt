@@ -3,7 +3,7 @@ import cv2
 import openai
 import logging
 from typing import List, Optional
-from imageai.Detection import ObjectDetection
+# from imageai.Detection import ObjectDetection
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -22,19 +22,19 @@ def capture_image(image_filename: str = "captured_image.jpg") -> Optional[str]:
     return image_filename
 
 
-def recognize_objects(image_path: str) -> List[str]:
-    execution_path = os.getcwd()
+# def recognize_objects(image_path: str) -> List[str]:
+#     execution_path = os.getcwd()
 
-    detector = ObjectDetection()
-    detector.setModelTypeAsRetinaNet()
-    detector.setModelPath(os.path.join(
-        execution_path, "resnet50_coco_best_v2.1.0.h5"))
-    detector.loadModel()
+#     detector = ObjectDetection()
+#     detector.setModelTypeAsRetinaNet()
+#     detector.setModelPath(os.path.join(
+#         execution_path, "resnet50_coco_best_v2.1.0.h5"))
+#     detector.loadModel()
 
-    detections = detector.detectObjectsFromImage(
-        input_image=image_path, output_image_path="output.jpg")
+#     detections = detector.detectObjectsFromImage(
+#         input_image=image_path, output_image_path="output.jpg")
 
-    return [detection["name"] for detection in detections]
+#     return [detection["name"] for detection in detections]
 
 
 def chat_with_gpt(objects_list: List[str]) -> str:
@@ -55,10 +55,10 @@ def chat_with_gpt(objects_list: List[str]) -> str:
 
 if __name__ == "__main__":
     image_path = capture_image()
-    if image_path:
-        objects = recognize_objects(image_path)
-        logger.info(f"Objects detected: {objects}")
-        response_message = chat_with_gpt(objects)
-        logger.info(f"ChatGPT says: {response_message}")
-    else:
-        logger.error("No image captured.")
+    # if image_path:
+    #     objects = recognize_objects(image_path)
+    #     logger.info(f"Objects detected: {objects}")
+    #     response_message = chat_with_gpt(objects)
+    #     logger.info(f"ChatGPT says: {response_message}")
+    # else:
+    #     logger.error("No image captured.")

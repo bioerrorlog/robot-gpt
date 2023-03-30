@@ -5,14 +5,6 @@
 ## Usage
 Install dependencies:
 ```sh
-# Rust compiler required
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-source $HOME/.cargo/env
-
-# Dev packages
-sudo apt install libffi-dev
-
-# Python libraries
 poetry install
 ```
 

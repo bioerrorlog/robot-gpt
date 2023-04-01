@@ -5,7 +5,7 @@
 ## Usage
 Install dependencies:
 ```sh
-poetry install
+pip install -r requirements.txt
 ```
 
 Run the script:
@@ -19,6 +19,9 @@ python robot_gpt/main.py
 
 ## Running tests
 ```sh
+# Install dev dependencies
+pip install -r requirements-dev.txt
+
 # Run camera tests (require a connected camera)
 pytest -m 'camera'
 ```

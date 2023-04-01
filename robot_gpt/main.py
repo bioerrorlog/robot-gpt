@@ -1,8 +1,9 @@
 import os
-import cv2
+# import cv2
 import openai
 import logging
-from typing import List, Optional
+from typing import List
+from picamera2 import Picamera2
 # from imageai.Detection import ObjectDetection
 
 logger = logging.getLogger(__name__)
@@ -11,14 +12,10 @@ logger.setLevel(logging.INFO)
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
 
-def capture_image(image_filename: str = "captured_image.jpg") -> Optional[str]:
-    cam = cv2.VideoCapture(0)
-    ret, frame = cam.read()
-    if not ret:
-        logger.error("Failed to capture image.")
-        return None
-    cam.release()
-    cv2.imwrite(image_filename, frame)
+def capture_image(image_filename: str = "captured_image.jpg") -> str:
+    picam2 = Picamera2()
+    picam2.start_and_capture_file(image_filename)
+
     return image_filename
 
 

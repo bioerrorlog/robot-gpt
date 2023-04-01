@@ -8,6 +8,11 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
+Download the pre-trained model:
+```sh
+curl -L -o ./models/tiny-yolov3.pt https://github.com/OlafenwaMoses/ImageAI/releases/download/3.0.0-pretrained/tiny-yolov3.pt
+```
+
 Run the script:
 ```sh
 # Set your OpenAI API key

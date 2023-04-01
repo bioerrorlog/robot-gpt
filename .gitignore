@@ -1,6 +1,9 @@
 .DS_Store
 *.jpg
 
+# pre-trained models
+*.pt
+
 ## Python
 # Byte-compiled / optimized / DLL files
 __pycache__/

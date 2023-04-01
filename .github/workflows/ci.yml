@@ -33,7 +33,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sudo apt install libcap-dev
+          sudo apt install -y libcap-dev python3-libcamera
           pip install -r requirements-dev.txt
           pip install -r requirements.txt
 

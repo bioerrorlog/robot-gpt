@@ -14,11 +14,11 @@ Run the script:
 export OPENAI_API_KEY=your_openai_api_key
 
 # Run the script
-poetry run python -m robot_gpt.main
+python robot_gpt/main.py
 ```
 
 ## Running tests
 ```sh
 # Run camera tests (require a connected camera)
-poetry run pytest -m 'camera'
+pytest -m 'camera'
 ```

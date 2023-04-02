@@ -1,0 +1,8 @@
+$ hostnamectl
+   Static hostname: raspberrypi
+         Icon name: computer
+        Machine ID: 4f8b19cb3280458c99d89xxxxxx
+           Boot ID: 275f81g1c1fd4249a49bbxxxxxx
+  Operating System: Debian GNU/Linux 11 (bullseye)
+            Kernel: Linux 6.1.19-v8+
+      Architecture: arm64

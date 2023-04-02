@@ -15,7 +15,7 @@ logger.setLevel(logging.INFO)
 
 def capture_image(image_filename: str = "captured_image.jpg") -> str:
     picam2 = Picamera2()
-    picam2.start_and_capture_file(image_filename)
+    picam2.start_and_capture_file(image_filename, show_preview=False)
 
     return image_filename
 

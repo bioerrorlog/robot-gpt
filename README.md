@@ -29,4 +29,7 @@ pip install -r requirements-dev.txt
 
 # Run camera tests (require a connected camera)
 pytest -m 'camera'
+
+# Run image recognition tests (require downloading the pre-trained model)
+pytest -m 'recognize'
 ```

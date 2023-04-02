@@ -5,7 +5,7 @@ from robot_gpt.main import capture_image
 
 @pytest.mark.camera
 def test_capture_image_success():
-    image_filename = "test_captured_image.jpg"
+    image_filename = "outputs/test_captured_image.jpg"
 
     result = capture_image(image_filename)
 

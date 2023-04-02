@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 
-def capture_image(image_filename: str = "captured_image.jpg") -> str:
+def capture_image(image_filename: str) -> str:
     picam2 = Picamera2()
     picam2.start_and_capture_file(image_filename, show_preview=False)
 
@@ -49,7 +49,7 @@ def recognize_objects(image_path: str, model_path: str) -> List[str]:
 
 
 if __name__ == "__main__":
-    image_path = capture_image()
+    image_path = capture_image("outputs/captured_image.jpg")
     if image_path:
         objects = recognize_objects(image_path, model_path)
         logger.info(f"Objects detected: {objects}")

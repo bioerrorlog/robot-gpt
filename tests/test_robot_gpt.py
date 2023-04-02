@@ -5,6 +5,7 @@ from robot_gpt.main import capture_image
 
 @pytest.mark.camera
 def test_capture_image_success():
+    """A connected camera required"""
     image_filename = "outputs/test_captured_image.jpg"
 
     result = capture_image(image_filename)

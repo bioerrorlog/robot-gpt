@@ -22,14 +22,15 @@ def capture_image(image_filename: str) -> str:
 
 def recognize_objects(image_path: str, model_path: str) -> List[str]:
     detector = ObjectDetection()
-    detector.setModelTypeAsYOLOv3()
+    detector.setModelTypeAsTinyYOLOv3()
     detector.setModelPath(model_path)
     detector.loadModel()
 
     detections = detector.detectObjectsFromImage(
-        input_image=image_path, output_image_path="array")
+        input_image=image_path, output_type="array")
+    objects_name_list = [i["name"] for i in detections[1]]
 
-    return [detection["name"] for detection in detections]
+    return objects_name_list
 
 
 # def chat_with_gpt(objects_list: List[str]) -> str:

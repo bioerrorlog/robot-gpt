@@ -1,13 +1,12 @@
-# import os
-# import cv2
-# import openai
+import os
+import openai
 import logging
 from typing import List
 from picamera2 import Picamera2
 from imageai.Detection import ObjectDetection
 
 model_path = "./models/tiny-yolov3.pt"
-# openai.api_key = os.environ["OPENAI_API_KEY"]
+openai.api_key = os.environ["OPENAI_API_KEY"]
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -33,20 +32,20 @@ def recognize_objects(image_path: str, model_path: str) -> List[str]:
     return objects_name_list
 
 
-# def chat_with_gpt(objects_list: List[str]) -> str:
-#     prompt = f"objects: {', '.join(objects_list)}"
+def chat_with_gpt(objects_list: List[str]) -> str:
+    prompt = f"objects: {', '.join(objects_list)}"
 
-#     response = openai.Completion.create(
-#         engine="text-davinci-002",
-#         prompt=prompt,
-#         max_tokens=150,
-#         n=1,
-#         stop=None,
-#         temperature=0.5,
-#     )
+    response = openai.Completion.create(
+        engine="text-davinci-002",
+        prompt=prompt,
+        max_tokens=150,
+        n=1,
+        stop=None,
+        temperature=0.5,
+    )
 
-#     message = response.choices[0].text.strip()
-#     return message
+    message = response.choices[0].text.strip()
+    return message
 
 
 if __name__ == "__main__":
@@ -54,7 +53,7 @@ if __name__ == "__main__":
     if image_path:
         objects = recognize_objects(image_path, model_path)
         logger.info(f"Objects detected: {objects}")
-        # response_message = chat_with_gpt(objects)
-        # logger.info(f"ChatGPT says: {response_message}")
+        response_message = chat_with_gpt(objects)
+        logger.info(f"ChatGPT says: {response_message}")
     else:
         logger.error("No image captured.")

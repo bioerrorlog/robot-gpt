@@ -16,7 +16,7 @@ curl -L -o ./models/tiny-yolov3.pt https://github.com/OlafenwaMoses/ImageAI/rele
 Run the script:
 ```sh
 # Set your OpenAI API key
-export OPENAI_API_KEY=your_openai_api_key
+export OPENAI_API_KEY="your_openai_api_key"
 
 # Run the script
 python robot_gpt/main.py

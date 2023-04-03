@@ -27,25 +27,23 @@ def recognize_objects(image_path: str, model_path: str) -> List[str]:
 
     detections = detector.detectObjectsFromImage(
         input_image=image_path, output_type="array")
-    objects_name_list = [i["name"] for i in detections[1]]
 
+    objects_name_list = [i["name"] for i in detections[1]]
     return objects_name_list
 
 
 def chat_with_gpt(objects_list: List[str]) -> str:
-    prompt = f"objects: {', '.join(objects_list)}"
+    messages = [
+        {"role": "system", "content": "You are a robot with a camera, fixed to a desk."},
+        {"role": "user", "content": "Now you can see the objects: {objects_list}"},
+    ]
 
-    response = openai.Completion.create(
-        engine="text-davinci-002",
-        prompt=prompt,
-        max_tokens=150,
-        n=1,
-        stop=None,
-        temperature=0.5,
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=messages
     )
 
-    message = response.choices[0].text.strip()
-    return message
+    return response.choices[0].message.content
 
 
 if __name__ == "__main__":
@@ -53,7 +51,8 @@ if __name__ == "__main__":
     if image_path:
         objects = recognize_objects(image_path, model_path)
         logger.info(f"Objects detected: {objects}")
-        response_message = chat_with_gpt(objects)
-        logger.info(f"ChatGPT says: {response_message}")
+
+        message = chat_with_gpt(objects)
+        logger.info(f"ChatGPT says: {message}")
     else:
         logger.error("No image captured.")

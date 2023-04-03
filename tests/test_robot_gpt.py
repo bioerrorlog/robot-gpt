@@ -1,6 +1,6 @@
 import os
 import pytest
-from robot_gpt.main import capture_image, recognize_objects
+from robot_gpt.main import capture_image, recognize_objects, chat_with_gpt
 
 
 @pytest.mark.camera
@@ -28,3 +28,15 @@ def test_recognize_objects_success():
     assert isinstance(objects, list)
     assert all(isinstance(item, str) for item in objects)
     assert len(objects) >= 1
+
+
+@pytest.mark.chatgpt
+def test_chat_with_gpt_success():
+    """Warning: The ChatGPT API will be actually called. The API Key is required."""
+    objects = ["cup", "tvmonitor", "pc"]
+
+    message = chat_with_gpt(objects)
+    print(message)
+
+    assert isinstance(message, str)
+    assert message != ""

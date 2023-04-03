@@ -32,4 +32,7 @@ pytest -m 'camera'
 
 # Run image recognition tests (require downloading the pre-trained model)
 pytest -m 'recognize'
+
+# Run ChatGPT API tests (Warning: The ChatGPT API will be actually called. The API Key is required.)
+pytest -m 'chatgpt'
 ```

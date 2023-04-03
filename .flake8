@@ -3,3 +3,5 @@ exclude =
     .git,
     __pycache__,
     .venv,
+
+ignore = E501

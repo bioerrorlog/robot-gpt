@@ -1,6 +1,11 @@
 import os
 import pytest
-from robot_gpt.main import capture_image, recognize_objects, chat_with_gpt
+from robot_gpt.main import (
+    capture_image,
+    recognize_objects,
+    ChatWithGPT,
+    Role,
+)
 
 
 @pytest.mark.camera
@@ -34,9 +39,19 @@ def test_recognize_objects_success():
 def test_chat_with_gpt_success():
     """Warning: The ChatGPT API will be actually called. The API Key is required."""
     objects = ["cup", "tvmonitor", "pc"]
+    chatbot = ChatWithGPT(objects)
 
-    message = chat_with_gpt(objects)
-    print(message)
+    response = chatbot.generate_response()
 
-    assert isinstance(message, str)
-    assert message != ""
+    print(response)
+    assert isinstance(response, str)
+    assert len(response) > 0
+
+    chatbot.append_message(Role.ASSISTANT, response)
+    chatbot.append_message(Role.USER, "Do you like thi place?")
+
+    response = chatbot.generate_response()
+
+    print(response)
+    assert isinstance(response, str)
+    assert len(response) > 0

@@ -1,7 +1,9 @@
 import os
-import openai
 import logging
+from enum import Enum
 from typing import List
+
+import openai
 from picamera2 import Picamera2
 from imageai.Detection import ObjectDetection
 
@@ -32,18 +34,29 @@ def recognize_objects(image_path: str, model_path: str) -> List[str]:
     return objects_name_list
 
 
-def chat_with_gpt(objects_list: List[str]) -> str:
-    messages = [
-        {"role": "system", "content": "You are a robot with a camera, fixed to a desk."},
-        {"role": "user", "content": "Now you can see the objects: {objects_list}"},
-    ]
+class Role(Enum):
+    SYSTEM = "system"
+    USER = "user"
+    ASSISTANT = "assistant"
 
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=messages
-    )
 
-    return response.choices[0].message.content
+class ChatWithGPT:
+    def __init__(self, objects: List[str]):
+        self.messages = [
+            {"role": Role.SYSTEM.value, "content": "You are a robot with a camera, fixed to a desk."},
+            {"role": Role.USER.value, "content": f"Now you can see the objects: {objects}"}
+        ]
+
+    def append_message(self, role: Role, content: str):
+        self.messages.append({"role": role.value, "content": content})
+
+    def generate_response(self) -> str:
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=self.messages
+        )
+
+        return response.choices[0].message.content
 
 
 if __name__ == "__main__":
@@ -52,7 +65,8 @@ if __name__ == "__main__":
         objects = recognize_objects(image_path, model_path)
         logger.info(f"Objects detected: {objects}")
 
-        message = chat_with_gpt(objects)
+        chatbot = ChatWithGPT(objects)
+        message = chatbot.generate_response()
         logger.info(f"ChatGPT says: {message}")
     else:
         logger.error("No image captured.")

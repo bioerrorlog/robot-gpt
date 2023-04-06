@@ -13,6 +13,10 @@ openai.api_key = os.environ["OPENAI_API_KEY"]
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.INFO)
+logger.addHandler(console_handler)
+
 
 def capture_image(image_filename: str) -> str:
     picam2 = Picamera2()

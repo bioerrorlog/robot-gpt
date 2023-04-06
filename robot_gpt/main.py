@@ -63,7 +63,7 @@ class ChatWithGPT:
         return response.choices[0].message.content
 
 
-if __name__ == "__main__":
+def main() -> None:
     image_path = capture_image("outputs/captured_image.jpg")
     logger.info(f"Image captured: {image_path}")
 
@@ -73,3 +73,7 @@ if __name__ == "__main__":
     chatbot = ChatWithGPT(objects)
     message = chatbot.generate_response()
     logger.info(f"ChatGPT says: {message}")
+
+
+if __name__ == "__main__":
+    main()

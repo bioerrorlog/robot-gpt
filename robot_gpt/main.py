@@ -61,12 +61,11 @@ class ChatWithGPT:
 
 if __name__ == "__main__":
     image_path = capture_image("outputs/captured_image.jpg")
-    if image_path:
-        objects = recognize_objects(image_path, model_path)
-        logger.info(f"Objects detected: {objects}")
+    logger.info(f"Image captured: {image_path}")
 
-        chatbot = ChatWithGPT(objects)
-        message = chatbot.generate_response()
-        logger.info(f"ChatGPT says: {message}")
-    else:
-        logger.error("No image captured.")
+    objects = recognize_objects(image_path, model_path)
+    logger.info(f"Objects detected: {objects}")
+
+    chatbot = ChatWithGPT(objects)
+    message = chatbot.generate_response()
+    logger.info(f"ChatGPT says: {message}")

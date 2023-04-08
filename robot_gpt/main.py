@@ -47,8 +47,12 @@ class Role(Enum):
 class ChatWithGPT:
     def __init__(self, objects: List[str]):
         self.messages = [
-            {"role": Role.SYSTEM.value, "content": "You are a robot with a camera, fixed to a desk."},
-            {"role": Role.USER.value, "content": f"Now you can see the objects: {objects}"}
+            {"role": Role.SYSTEM.value, "content": "You are a robot with a camera, composed of 2 servo motors: horizontal & vertical"},
+            {"role": Role.SYSTEM.value, "content": "Horizontal: min -90 left, max 90 right"},
+            {"role": Role.SYSTEM.value, "content": "Vertical: min -90 down, max 90 up"},
+            {"role": Role.SYSTEM.value, "content": "Your behavior principles: [curiosity, inquisitiveness, playfulness]"},
+            {"role": Role.SYSTEM.value, "content": 'Your answer must be in this JSON format: {"NextServoMotor": {"Horizontal": int(-90~90), "Vertical": int(-90~90)} "FreeTalk": string}'},
+            {"role": Role.USER.value, "content": '{"CurrentServoMotor": {"Horizontal": 0, "Vertical": 0}, "SeenObjects": ["speaker","laptop"."speaker"]}'}
         ]
 
     def append_message(self, role: Role, content: str):

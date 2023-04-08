@@ -72,7 +72,7 @@ def main() -> None:
 
     chatbot = ChatWithGPT(objects)
     message = chatbot.generate_response()
-    logger.info(f"ChatGPT says: {message}")
+    print(f"ChatGPT says: {message}")
 
 
 if __name__ == "__main__":

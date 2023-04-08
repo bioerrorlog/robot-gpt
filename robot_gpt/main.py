@@ -79,7 +79,10 @@ class ChatWithGPT:
             messages=self._messages
         )
 
-        return response.choices[0].message.content
+        response_content = response.choices[0].message.content
+        self._messages.append({"role": Role.ASSISTANT.value, "content": response_content})
+
+        return response_content
 
 
 def main() -> None:

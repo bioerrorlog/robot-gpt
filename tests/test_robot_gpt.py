@@ -54,9 +54,7 @@ def test_chat_with_gpt_success():
     assert isinstance(json_response['NextServoMotor']['Vertical'], int)
     assert isinstance(json_response['FreeTalk'], str)
 
-    chatbot.append_message(Role.ASSISTANT, response)
     chatbot.append_message(Role.USER, "What do you want to do in this place if you have two hands?")
-
     response = chatbot.generate_response()
 
     print(response)
@@ -64,7 +62,7 @@ def test_chat_with_gpt_success():
     assert len(response) > 0
 
     all_messages = chatbot.messages
-    assert isinstance(all_messages, list)
-    assert len(all_messages) > 0
     for i in all_messages:
         print(i)
+    assert isinstance(all_messages, list)
+    assert len(all_messages) > 0

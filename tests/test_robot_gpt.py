@@ -1,7 +1,7 @@
 import os
 import json
 import pytest
-from robot_gpt.main import (
+from robot_gpt.hardware import (
     capture_image,
     recognize_objects,
 )

@@ -6,8 +6,6 @@ from robot_gpt.hardware import (
 )
 
 
-model_path = "./models/tiny-yolov3.pt"
-
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
@@ -20,7 +18,7 @@ def main() -> None:
     image_path = capture_image("outputs/captured_image.jpg")
     logger.info(f"Image captured: {image_path}")
 
-    objects = recognize_objects(image_path, model_path)
+    objects = recognize_objects(image_path)
     logger.info(f"Objects detected: {objects}")
 
     chatbot = ChatWithGPT()

@@ -29,16 +29,15 @@ def test_capture_image_success():
 def test_recognize_objects_success():
     """Download pre-trained model before running this test. See README."""
     image_path = "outputs/unittest.jpg"
-    model_path = "models/tiny-yolov3.pt"
 
-    objects = recognize_objects(image_path, model_path)
+    objects = recognize_objects(image_path)
 
     assert isinstance(objects, list)
     assert all(isinstance(item, str) for item in objects)
     assert len(objects) >= 1
 
 
-@pytest.mark.chatgpt
+@ pytest.mark.chatgpt
 def test_chat_with_gpt_success():
     """Warning: The ChatGPT API will be actually called. The API Key is required."""
     chatbot = ChatWithGPT()

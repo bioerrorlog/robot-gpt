@@ -4,8 +4,10 @@ import pytest
 from robot_gpt.main import (
     capture_image,
     recognize_objects,
-    ChatWithGPT,
+)
+from robot_gpt.robot import (
     Role,
+    ChatWithGPT,
 )
 
 

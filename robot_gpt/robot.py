@@ -32,7 +32,7 @@ class RobotGPT:
             {"role": Role.SYSTEM.value, "content": "Horizontal: min -90 left, max 90 right"},
             {"role": Role.SYSTEM.value, "content": "Vertical: min -90 down, max 90 up"},
             {"role": Role.SYSTEM.value, "content": "Your behavior principles: [curiosity, inquisitiveness, playfulness]"},
-            {"role": Role.SYSTEM.value, "content": 'Your answer must be in this JSON format: {"NextServoMotor": {"Horizontal": int(-90~90), "Vertical": int(-90~90)} "FreeTalk": string}'},
+            {"role": Role.SYSTEM.value, "content": 'Your answer MUST be in this JSON format: {"NextServoMotor": {"Horizontal": int(-90~90), "Vertical": int(-90~90)} "FreeTalk": string}'},
         ]
         self._horizontal = horizontal
         self._vertical = vertical
@@ -64,6 +64,8 @@ class RobotGPT:
         self.append_prompt(Role.USER, json.dumps(content))
 
     def call_gpt(self) -> str:
+        logger.info("Start OpenAI API call.")
+        logger.info(f"Prompts: {self.prompts}")
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=self.prompts

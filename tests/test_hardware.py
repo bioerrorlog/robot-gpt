@@ -3,6 +3,7 @@ import pytest
 from robot_gpt.hardware import (
     capture_image,
     recognize_objects,
+    angle,
 )
 
 
@@ -30,3 +31,13 @@ def test_recognize_objects_success():
     assert isinstance(objects, list)
     assert all(isinstance(item, str) for item in objects)
     assert len(objects) >= 1
+
+
+@pytest.mark.servo
+def test_servo_angle():
+    test_horizontal = 30
+    test_vertical = -30
+    horizontal, vertical = angle(test_horizontal, test_vertical)
+
+    assert horizontal == test_horizontal
+    assert test_vertical == vertical

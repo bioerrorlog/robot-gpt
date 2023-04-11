@@ -1,7 +1,8 @@
 import os
-from typing import List
+from typing import List, Tuple
 from picamera2 import Picamera2
 from imageai.Detection import ObjectDetection
+from gpiozero import AngularServo
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 MODEL_PATH = os.path.join(current_dir, '../models/tiny-yolov3.pt')
@@ -25,3 +26,14 @@ def recognize_objects(image_path: str) -> List[str]:
 
     objects_name_list = [i["name"] for i in detections[1]]
     return objects_name_list
+
+
+def angle(horizontal: int, vertical: int, gpio_horizontal: int = 17, gpio_vertical: int = 18) -> Tuple[int, int]:
+    servo_horizontal = AngularServo(gpio_horizontal)
+    servo_vertical = AngularServo(gpio_vertical)
+
+    for i in range(1000):
+        servo_horizontal.angle = horizontal
+        servo_vertical.angle = vertical
+
+    return servo_horizontal.angle, servo_vertical.angle

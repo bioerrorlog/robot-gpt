@@ -38,6 +38,9 @@ pytest -m 'recognize'
 # Run ChatGPT API tests (Warning: The ChatGPT API will be actually called. The API Key is required.)
 pytest -s -m 'chatgpt'
 
+# Run servo moter tests (require connected servo motors)
+pytest -m 'servo'
+
 # Run the all tests
 pytest -m ''
 ```

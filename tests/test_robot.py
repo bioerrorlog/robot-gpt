@@ -32,7 +32,7 @@ def test_recognize(mocker):
 
     mocker.patch("robot_gpt.hardware.capture_image", return_value="./outputs/captured_image.jpg")
     mocker.patch("robot_gpt.hardware.recognize_objects", return_value=["object1", "object2"])
-    robot.recognize(45, -30)
+    robot.recognize()
 
     updated_prompts = robot.prompts
     updated_length = len(updated_prompts)
@@ -50,7 +50,7 @@ def test_call_gpt(mocker):
 
     mocker.patch("robot_gpt.hardware.capture_image", return_value="./outputs/captured_image.jpg")
     mocker.patch("robot_gpt.hardware.recognize_objects", return_value=["skeaker", "pcmonitor", "keyboard"])
-    robot.recognize(45, -30)
+    robot.recognize()
 
     response = robot.call_gpt()
 

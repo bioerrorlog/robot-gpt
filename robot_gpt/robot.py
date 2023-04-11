@@ -45,7 +45,7 @@ class RobotGPT:
     def append_prompt(self, role: Role, content: str):
         self._prompts.append({"role": role.value, "content": content})
 
-    def recognize(self, horizontal: int, vertical: int):
+    def recognize(self):
         current_dir = os.path.dirname(os.path.abspath(__file__))
         image_path = capture_image(os.path.join(current_dir, '../outputs/captured_image.jpg'))
         logger.info(f"Image captured: {image_path}")
@@ -54,7 +54,7 @@ class RobotGPT:
         logger.info(f"Objects detected: {objects}")
 
         content = {
-            "CurrentServoMotor": {"Horizontal": horizontal, "Vertical": vertical},
+            "CurrentServoMotor": {"Horizontal": self._horizontal, "Vertical": self._vertical},
             "SeenObjects": objects,
         }
         self.append_prompt(Role.USER, json.dumps(content))

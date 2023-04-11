@@ -1,6 +1,5 @@
 import json
 import pytest
-
 from robot_gpt.robot import (
     Role,
     RobotGPT,
@@ -26,12 +25,14 @@ def test_append_prompt(test_role):
     assert last_prompt["content"] == test_content
 
 
-def test_recognize():
+def test_recognize(mocker):
     robot = RobotGPT()
     initial_prompts = robot.prompts
     initial_length = len(initial_prompts)
 
-    robot.recognize(45, -30, ["object1", "object2"])
+    mocker.patch("robot_gpt.hardware.capture_image", return_value="./outputs/captured_image.jpg")
+    mocker.patch("robot_gpt.hardware.recognize_objects", return_value=["object1", "object2"])
+    robot.recognize(45, -30)
 
     updated_prompts = robot.prompts
     updated_length = len(updated_prompts)

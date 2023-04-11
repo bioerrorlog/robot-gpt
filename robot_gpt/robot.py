@@ -1,10 +1,21 @@
 import os
 import json
+import logging
 from enum import Enum
-from typing import List
 import openai
+from robot_gpt.hardware import (
+    capture_image,
+    recognize_objects,
+)
 
 openai.api_key = os.environ["OPENAI_API_KEY"]
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.INFO)
+logger.addHandler(console_handler)
 
 
 class Role(Enum):
@@ -30,7 +41,14 @@ class RobotGPT:
     def append_prompt(self, role: Role, content: str):
         self._prompts.append({"role": role.value, "content": content})
 
-    def recognize(self, horizontal: int, vertical: int, objects: List[str]):
+    def recognize(self, horizontal: int, vertical: int):
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        image_path = capture_image(os.path.join(current_dir, '../outputs/captured_image.jpg'))
+        logger.info(f"Image captured: {image_path}")
+
+        objects = recognize_objects(image_path)
+        logger.info(f"Objects detected: {objects}")
+
         content = {
             "CurrentServoMotor": {"Horizontal": horizontal, "Vertical": vertical},
             "SeenObjects": objects,

@@ -55,7 +55,7 @@ class RobotGPT:
         }
         self.append_prompt(Role.USER, json.dumps(content))
 
-    def generate_response(self) -> str:
+    def call_gpt(self) -> str:
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=self._prompts

@@ -6,7 +6,7 @@ def main() -> None:
 
     robot.recognize(45, -30)
 
-    message = robot.generate_response()
+    message = robot.call_gpt()
     print(f"RobotGPT says: {message}")
 
 

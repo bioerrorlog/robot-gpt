@@ -49,7 +49,7 @@ def test_chat_with_gpt_success():
     chatbot = RobotGPT()
 
     chatbot.recognize(0, 0, ["cup", "tvmonitor", "pc"])
-    response = chatbot.generate_response()
+    response = chatbot.call_gpt()
 
     print(response)
     assert isinstance(response, str)
@@ -62,7 +62,7 @@ def test_chat_with_gpt_success():
     assert isinstance(json_response['FreeTalk'], str)
 
     chatbot.append_prompt(Role.USER, "What do you want to do in this place if you have two hands?")
-    response = chatbot.generate_response()
+    response = chatbot.call_gpt()
 
     print(response)
     assert isinstance(response, str)

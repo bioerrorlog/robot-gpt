@@ -25,7 +25,7 @@ class Role(Enum):
 
 
 class RobotGPT:
-    def __init__(self):
+    def __init__(self, horizontal: int = 0, vertical: int = 0):
         self._prompts = [
             {"role": Role.SYSTEM.value, "content": "You are a robot with a camera, composed of 2 servo motors: horizontal & vertical"},
             {"role": Role.SYSTEM.value, "content": "Horizontal: min -90 left, max 90 right"},
@@ -33,6 +33,10 @@ class RobotGPT:
             {"role": Role.SYSTEM.value, "content": "Your behavior principles: [curiosity, inquisitiveness, playfulness]"},
             {"role": Role.SYSTEM.value, "content": 'Your answer must be in this JSON format: {"NextServoMotor": {"Horizontal": int(-90~90), "Vertical": int(-90~90)} "FreeTalk": string}'},
         ]
+        self._horizontal = horizontal
+        self._vertical = vertical
+        self._next_horizontal = 0
+        self._next_vertical = 0
 
     @property
     def prompts(self):

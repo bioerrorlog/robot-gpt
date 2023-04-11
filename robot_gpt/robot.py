@@ -60,8 +60,8 @@ class RobotGPT:
             model="gpt-3.5-turbo",
             messages=self._prompts
         )
+        content = response.choices[0].message.content
 
-        response_content = response.choices[0].message.content
-        self._prompts.append({"role": Role.ASSISTANT.value, "content": response_content})
+        self.append_prompt(Role.ASSISTANT, content)
 
-        return response_content
+        return content

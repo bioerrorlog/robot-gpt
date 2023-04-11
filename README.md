@@ -2,6 +2,8 @@
 
 [![CI](https://github.com/bioerrorlog/robot-gpt/actions/workflows/ci.yml/badge.svg)](https://github.com/bioerrorlog/robot-gpt/actions/workflows/ci.yml)
 
+Robot with GPT as the brain.
+
 ## Usage
 Install dependencies:
 ```sh

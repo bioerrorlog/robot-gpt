@@ -6,6 +6,7 @@ import openai
 from robot_gpt.hardware import (
     capture_image,
     recognize_objects,
+    angle,
 )
 
 openai.api_key = os.environ["OPENAI_API_KEY"]
@@ -44,6 +45,9 @@ class RobotGPT:
 
     def append_prompt(self, role: Role, content: str):
         self._prompts.append({"role": role.value, "content": content})
+
+    def look(self):
+        self._horizontal, self._vertical = angle(self._next_horizontal, self._next_vertical)
 
     def recognize(self):
         current_dir = os.path.dirname(os.path.abspath(__file__))

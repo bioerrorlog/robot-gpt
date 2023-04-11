@@ -4,6 +4,7 @@ from robot_gpt.robot import RobotGPT
 def main() -> None:
     robot = RobotGPT()
 
+    robot.look()
     robot.recognize()
 
     message = robot.call_gpt()

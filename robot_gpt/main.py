@@ -1,5 +1,5 @@
 import logging
-from robot_gpt.robot import ChatWithGPT
+from robot_gpt.robot import RobotGPT
 from robot_gpt.hardware import (
     capture_image,
     recognize_objects,
@@ -21,7 +21,7 @@ def main() -> None:
     objects = recognize_objects(image_path)
     logger.info(f"Objects detected: {objects}")
 
-    chatbot = ChatWithGPT()
+    chatbot = RobotGPT()
     message = chatbot.generate_response()
     print(f"ChatGPT says: {message}")
 

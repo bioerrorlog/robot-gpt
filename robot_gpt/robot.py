@@ -13,7 +13,7 @@ class Role(Enum):
     ASSISTANT = "assistant"
 
 
-class ChatWithGPT:
+class RobotGPT:
     def __init__(self):
         self._messages = [
             {"role": Role.SYSTEM.value, "content": "You are a robot with a camera, composed of 2 servo motors: horizontal & vertical"},

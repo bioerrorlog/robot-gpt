@@ -3,14 +3,14 @@ import pytest
 
 from robot_gpt.robot import (
     Role,
-    ChatWithGPT,
+    RobotGPT,
 )
 
 
 @ pytest.mark.chatgpt
 def test_chat_with_gpt_success():
     """Warning: The ChatGPT API will be actually called. The API Key is required."""
-    chatbot = ChatWithGPT()
+    chatbot = RobotGPT()
 
     chatbot.append_recognition(0, 0, ["cup", "tvmonitor", "pc"])
     response = chatbot.generate_response()

@@ -34,10 +34,10 @@ def test_recognize_objects_success():
 
 
 @pytest.mark.servo
-def test_servo_angle():
-    test_horizontal = 30
-    test_vertical = -30
-    horizontal, vertical = angle(test_horizontal, test_vertical)
+@pytest.mark.parametrize("test_horizontal, test_vertical",
+                         [(30, 30), (-30, -30), (90, 90), (-90, -90), (0, 0)])
+def test_servo_angle(test_horizontal, test_vertical):
+    result_horizontal, result_vertical = angle(test_horizontal, test_vertical)
 
-    assert horizontal == test_horizontal
-    assert test_vertical == vertical
+    assert result_horizontal == test_horizontal
+    assert test_vertical == result_vertical

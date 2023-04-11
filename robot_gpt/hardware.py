@@ -1,4 +1,5 @@
 import os
+import time
 from typing import List, Tuple
 from picamera2 import Picamera2
 from imageai.Detection import ObjectDetection
@@ -32,8 +33,8 @@ def angle(horizontal: int, vertical: int, gpio_horizontal: int = 17, gpio_vertic
     servo_horizontal = AngularServo(gpio_horizontal)
     servo_vertical = AngularServo(gpio_vertical)
 
-    for i in range(1000):
-        servo_horizontal.angle = horizontal
-        servo_vertical.angle = vertical
+    servo_horizontal.angle = horizontal
+    servo_vertical.angle = vertical
+    time.sleep(0.2)
 
     return servo_horizontal.angle, servo_vertical.angle

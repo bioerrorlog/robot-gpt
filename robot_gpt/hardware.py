@@ -10,8 +10,9 @@ MODEL_PATH = os.path.join(current_dir, '../models/tiny-yolov3.pt')
 
 
 def capture_image(image_filename: str) -> str:
-    picam2 = Picamera2()
-    picam2.start_and_capture_file(image_filename, show_preview=False)
+    # TODO: resolve the overhead
+    with Picamera2() as picam2:
+        picam2.start_and_capture_file(image_filename, show_preview=False)
 
     return image_filename
 

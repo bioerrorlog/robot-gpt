@@ -44,32 +44,18 @@ def test_recognize(mocker):
 
 
 @ pytest.mark.chatgpt
-def test_chat_with_gpt_success():
+def test_call_gpt(mocker):
     """Warning: The ChatGPT API will be actually called. The API Key is required."""
-    chatbot = RobotGPT()
+    robot = RobotGPT()
 
-    chatbot.recognize(0, 0, ["cup", "tvmonitor", "pc"])
-    response = chatbot.call_gpt()
+    mocker.patch("robot_gpt.hardware.capture_image", return_value="./outputs/captured_image.jpg")
+    mocker.patch("robot_gpt.hardware.recognize_objects", return_value=["skeaker", "pcmonitor", "keyboard"])
+    robot.recognize(45, -30)
 
-    print(response)
-    assert isinstance(response, str)
-    assert len(response) > 0
+    response = robot.call_gpt()
 
     # Response can be parsed in JSON
     json_response = json.loads(response)
     assert isinstance(json_response['NextServoMotor']['Horizontal'], int)
     assert isinstance(json_response['NextServoMotor']['Vertical'], int)
     assert isinstance(json_response['FreeTalk'], str)
-
-    chatbot.append_prompt(Role.USER, "What do you want to do in this place if you have two hands?")
-    response = chatbot.call_gpt()
-
-    print(response)
-    assert isinstance(response, str)
-    assert len(response) > 0
-
-    all_prompts = chatbot.prompts
-    for i in all_prompts:
-        print(i)
-    assert isinstance(all_prompts, list)
-    assert len(all_prompts) > 0

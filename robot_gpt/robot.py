@@ -58,9 +58,10 @@ class RobotGPT:
     def call_gpt(self) -> str:
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
-            messages=self._prompts
+            messages=self.prompts
         )
         content = response.choices[0].message.content
+        logger.info(f"Response content: {content}")
 
         self.append_prompt(Role.ASSISTANT, content)
 

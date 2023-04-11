@@ -32,8 +32,8 @@ def test_chat_with_gpt_success():
     assert isinstance(response, str)
     assert len(response) > 0
 
-    all_messages = chatbot.messages
-    for i in all_messages:
+    all_prompts = chatbot.prompts
+    for i in all_prompts:
         print(i)
-    assert isinstance(all_messages, list)
-    assert len(all_messages) > 0
+    assert isinstance(all_prompts, list)
+    assert len(all_prompts) > 0

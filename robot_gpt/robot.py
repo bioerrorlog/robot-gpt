@@ -15,7 +15,7 @@ class Role(Enum):
 
 class RobotGPT:
     def __init__(self):
-        self._messages = [
+        self._prompts = [
             {"role": Role.SYSTEM.value, "content": "You are a robot with a camera, composed of 2 servo motors: horizontal & vertical"},
             {"role": Role.SYSTEM.value, "content": "Horizontal: min -90 left, max 90 right"},
             {"role": Role.SYSTEM.value, "content": "Vertical: min -90 down, max 90 up"},
@@ -24,8 +24,11 @@ class RobotGPT:
         ]
 
     @property
-    def messages(self):
-        return self._messages
+    def prompts(self):
+        return self._prompts
+
+    def append_message(self, role: Role, content: str):
+        self._prompts.append({"role": role.value, "content": content})
 
     def append_recognition(self, horizontal: int, vertical: int, objects: List[str]):
         content = {
@@ -33,21 +36,18 @@ class RobotGPT:
             "SeenObjects": objects,
         }
 
-        self._messages.append({
+        self._prompts.append({
             "role": Role.USER.value,
             "content": json.dumps(content),
         })
 
-    def append_message(self, role: Role, content: str):
-        self._messages.append({"role": role.value, "content": content})
-
     def generate_response(self) -> str:
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
-            messages=self._messages
+            messages=self._prompts
         )
 
         response_content = response.choices[0].message.content
-        self._messages.append({"role": Role.ASSISTANT.value, "content": response_content})
+        self._prompts.append({"role": Role.ASSISTANT.value, "content": response_content})
 
         return response_content

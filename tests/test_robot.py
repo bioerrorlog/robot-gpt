@@ -26,6 +26,22 @@ def test_append_prompt(test_role):
     assert last_prompt["content"] == test_content
 
 
+def test_recognize():
+    robot = RobotGPT()
+    initial_prompts = robot.prompts
+    initial_length = len(initial_prompts)
+
+    robot.recognize(45, -30, ["object1", "object2"])
+
+    updated_prompts = robot.prompts
+    updated_length = len(updated_prompts)
+
+    assert updated_length == initial_length + 1
+
+    last_prompt = updated_prompts[-1]
+    assert last_prompt["role"] == Role.USER.value
+
+
 @ pytest.mark.chatgpt
 def test_chat_with_gpt_success():
     """Warning: The ChatGPT API will be actually called. The API Key is required."""

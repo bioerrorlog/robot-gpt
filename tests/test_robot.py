@@ -31,7 +31,7 @@ def test_chat_with_gpt_success():
     """Warning: The ChatGPT API will be actually called. The API Key is required."""
     chatbot = RobotGPT()
 
-    chatbot.append_recognition(0, 0, ["cup", "tvmonitor", "pc"])
+    chatbot.recognize(0, 0, ["cup", "tvmonitor", "pc"])
     response = chatbot.generate_response()
 
     print(response)

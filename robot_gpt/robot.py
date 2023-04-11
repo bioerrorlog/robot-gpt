@@ -30,7 +30,7 @@ class RobotGPT:
     def append_prompt(self, role: Role, content: str):
         self._prompts.append({"role": role.value, "content": content})
 
-    def append_recognition(self, horizontal: int, vertical: int, objects: List[str]):
+    def recognize(self, horizontal: int, vertical: int, objects: List[str]):
         content = {
             "CurrentServoMotor": {"Horizontal": horizontal, "Vertical": vertical},
             "SeenObjects": objects,

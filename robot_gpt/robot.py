@@ -35,11 +35,7 @@ class RobotGPT:
             "CurrentServoMotor": {"Horizontal": horizontal, "Vertical": vertical},
             "SeenObjects": objects,
         }
-
-        self._prompts.append({
-            "role": Role.USER.value,
-            "content": json.dumps(content),
-        })
+        self.append_prompt(Role.USER, json.dumps(content))
 
     def generate_response(self) -> str:
         response = openai.ChatCompletion.create(

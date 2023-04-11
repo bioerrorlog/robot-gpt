@@ -25,7 +25,7 @@ def test_chat_with_gpt_success():
     assert isinstance(json_response['NextServoMotor']['Vertical'], int)
     assert isinstance(json_response['FreeTalk'], str)
 
-    chatbot.append_message(Role.USER, "What do you want to do in this place if you have two hands?")
+    chatbot.append_prompt(Role.USER, "What do you want to do in this place if you have two hands?")
     response = chatbot.generate_response()
 
     print(response)

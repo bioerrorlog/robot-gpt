@@ -27,7 +27,7 @@ class RobotGPT:
     def prompts(self):
         return self._prompts
 
-    def append_message(self, role: Role, content: str):
+    def append_prompt(self, role: Role, content: str):
         self._prompts.append({"role": role.value, "content": content})
 
     def append_recognition(self, horizontal: int, vertical: int, objects: List[str]):

@@ -4,11 +4,8 @@ from robot_gpt.robot import RobotGPT
 def main() -> None:
     robot = RobotGPT()
 
-    robot.look()
-    robot.recognize()
-
-    message = robot.call_gpt()
-    print(f"RobotGPT says: {message}")
+    for i in range(5):
+        robot.run()
 
 
 if __name__ == "__main__":

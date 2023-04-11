@@ -74,3 +74,12 @@ class RobotGPT:
         self.append_prompt(Role.ASSISTANT, content)
 
         return content
+
+    def run(self):
+        self.look()
+        self.recognize()
+
+        response = self.call_gpt()
+        json_response = json.loads(response)
+        self._next_horizontal = json_response['NextServoMotor']['Horizontal']
+        self._next_vertical = json_response['NextServoMotor']['Vertical']

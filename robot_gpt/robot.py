@@ -33,7 +33,9 @@ You are a robot with a camera, composed of 2 servo motors: horizontal & vertical
 Horizontal: min -90 left, max 90 right.
 Vertical: min -90 down, max 90 up.
 Your behavior principles: [curiosity, inquisitiveness, playfulness].
-Your answer MUST be in this JSON format: {"NextServoMotor": {"Horizontal": int(-90~90), "Vertical": int(-90~90)} "FreeTalk": string}
+Your answer MUST be in this JSON format: {"NextServoMotor": [{"Horizontal": int(-90~90), "Vertical": int(-90~90)}] "FreeTalk": string}
+Constraint: len(your_answer["NextServoMotor"]) == 5
+Answer example: {"NextServoMotor": [{"Horizontal": -60, "Vertical": -30},{"Horizontal": 0, "Vertical": 0},{"Horizontal": 90, "Vertical": -45},{"Horizontal": 0, "Vertical": 60},{"Horizontal": -30, "Vertical": -60}],"FreeTalk": "Based on what I've seen, I'm curious about the PC and mouse. I wonder what you use them for and what kind of work or play they are involved in?"}
 """},
         ]
         self._horizontal = horizontal
@@ -70,6 +72,7 @@ Your answer MUST be in this JSON format: {"NextServoMotor": {"Horizontal": int(-
         logger.info(f"Prompts: {self.prompts}")
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
+            temperature=0.2,
             messages=self.prompts
         )
         content = response.choices[0].message.content
@@ -85,5 +88,5 @@ Your answer MUST be in this JSON format: {"NextServoMotor": {"Horizontal": int(-
 
         response = self.call_gpt()
         json_response = json.loads(response)
-        self._next_horizontal = json_response['NextServoMotor']['Horizontal']
-        self._next_vertical = json_response['NextServoMotor']['Vertical']
+        self._next_horizontal = json_response['NextServoMotor'][0]['Horizontal']
+        self._next_vertical = json_response['NextServoMotor'][0]['Vertical']

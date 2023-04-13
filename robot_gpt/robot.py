@@ -91,3 +91,9 @@ Answer example: {"NextServoMotor": [{"Horizontal": -60, "Vertical": -30},{"Horiz
             self._next_vertical = next_servo_motor['Vertical']
             self.look()
             self.recognize()
+
+    def talk(self, message: str) -> str:
+        self.append_prompt(Role.USER, message)
+        self.append_prompt(Role.SYSTEM, "You can answer in free format only once.")
+
+        return self.call_gpt()

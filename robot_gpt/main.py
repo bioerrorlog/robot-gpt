@@ -9,6 +9,8 @@ def main() -> None:
     for i in range(3):
         robot.call_and_recognize()
 
+    robot.talk("Summarize your surroundings.")
+
 
 if __name__ == "__main__":
     main()

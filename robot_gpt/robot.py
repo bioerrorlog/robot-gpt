@@ -82,11 +82,12 @@ Answer example: {"NextServoMotor": [{"Horizontal": -60, "Vertical": -30},{"Horiz
 
         return content
 
-    def run(self):
-        self.look()
-        self.recognize()
-
+    def call_and_recognize(self):
         response = self.call_gpt()
         json_response = json.loads(response)
-        self._next_horizontal = json_response['NextServoMotor'][0]['Horizontal']
-        self._next_vertical = json_response['NextServoMotor'][0]['Vertical']
+
+        for next_servo_motor in json_response['NextServoMotor']:
+            self._next_horizontal = next_servo_motor['Horizontal']
+            self._next_vertical = next_servo_motor['Vertical']
+            self.look()
+            self.recognize()

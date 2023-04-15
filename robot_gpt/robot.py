@@ -44,6 +44,12 @@ Answer example: {"NextServoMotor": [{"Horizontal": -60, "Vertical": -30},{"Horiz
         self._next_vertical = 0
         self._camera = Camera()
 
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.close()
+
     @property
     def prompts(self):
         return self._prompts

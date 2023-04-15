@@ -10,6 +10,7 @@ def main() -> None:
         robot.call_and_recognize()
 
     robot.talk("Summarize your surroundings.")
+    robot.close()
 
 
 if __name__ == "__main__":

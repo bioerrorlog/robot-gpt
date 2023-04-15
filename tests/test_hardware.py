@@ -1,7 +1,7 @@
 import os
 import pytest
 from robot_gpt.hardware import (
-    capture_image,
+    Camera,
     recognize_objects,
     angle,
 )
@@ -11,14 +11,16 @@ from robot_gpt.hardware import (
 def test_capture_image_success():
     """A connected camera required"""
     image_filename = "outputs/test_captured_image.jpg"
+    camera = Camera()
 
-    result = capture_image(image_filename)
+    result = camera.capture_image(image_filename)
 
     assert result == image_filename
     assert os.path.exists(image_filename)
 
     # Clean up the test image file.
     os.remove(image_filename)
+    camera.close()
 
 
 @pytest.mark.recognize

@@ -24,13 +24,15 @@ def test_append_prompt(test_role):
     assert last_prompt["role"] == test_role.value
     assert last_prompt["content"] == test_content
 
+    robot.close()
+
 
 def test_recognize(mocker):
     robot = RobotGPT()
     initial_prompts = robot.prompts
     initial_length = len(initial_prompts)
 
-    mocker.patch("robot_gpt.hardware.capture_image", return_value="./outputs/captured_image.jpg")
+    mocker.patch("robot_gpt.hardware.Camera.capture_image", return_value="./outputs/captured_image.jpg")
     mocker.patch("robot_gpt.hardware.recognize_objects", return_value=["object1", "object2"])
     robot.recognize()
 
@@ -42,13 +44,15 @@ def test_recognize(mocker):
     last_prompt = updated_prompts[-1]
     assert last_prompt["role"] == Role.USER.value
 
+    robot.close()
+
 
 @ pytest.mark.chatgpt
 def test_call_gpt(mocker):
     """Warning: The ChatGPT API will be actually called. The API Key is required."""
     robot = RobotGPT()
 
-    mocker.patch("robot_gpt.hardware.capture_image", return_value="./outputs/captured_image.jpg")
+    mocker.patch("robot_gpt.hardware.Camera.capture_image", return_value="./outputs/captured_image.jpg")
     mocker.patch("robot_gpt.hardware.recognize_objects", return_value=["skeaker", "pcmonitor", "keyboard"])
     robot.recognize()
 
@@ -60,3 +64,5 @@ def test_call_gpt(mocker):
     assert isinstance(json_response['NextServoMotor'][0]['Horizontal'], int)
     assert isinstance(json_response['NextServoMotor'][0]['Vertical'], int)
     assert isinstance(json_response['FreeTalk'], str)
+
+    robot.close()

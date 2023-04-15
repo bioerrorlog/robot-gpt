@@ -9,12 +9,16 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 MODEL_PATH = os.path.join(current_dir, '../models/tiny-yolov3.pt')
 
 
-def capture_image(image_filename: str) -> str:
-    # TODO: resolve the overhead
-    with Picamera2() as picam2:
-        picam2.start_and_capture_file(image_filename, show_preview=False)
+class Camera:
+    def __init__(self):
+        self.picam2 = Picamera2()
 
-    return image_filename
+    def capture_image(self, image_filename: str) -> str:
+        self.picam2.start_and_capture_file(image_filename, show_preview=False)
+        return image_filename
+
+    def close(self):
+        self.picam2.close()
 
 
 def recognize_objects(image_path: str) -> List[str]:

@@ -4,7 +4,7 @@ import logging
 from enum import Enum
 import openai
 from robot_gpt.hardware import (
-    capture_image,
+    Camera,
     recognize_objects,
     angle,
 )
@@ -42,6 +42,7 @@ Answer example: {"NextServoMotor": [{"Horizontal": -60, "Vertical": -30},{"Horiz
         self._vertical = vertical
         self._next_horizontal = 0
         self._next_vertical = 0
+        self._camera = Camera()
 
     @property
     def prompts(self):
@@ -55,7 +56,8 @@ Answer example: {"NextServoMotor": [{"Horizontal": -60, "Vertical": -30},{"Horiz
 
     def recognize(self):
         current_dir = os.path.dirname(os.path.abspath(__file__))
-        image_path = capture_image(os.path.join(current_dir, '../outputs/captured_image.jpg'))
+        image_path = os.path.join(current_dir, '../outputs/captured_image.jpg')
+        self._camera.capture_image(image_path)
         logger.info(f"Image captured: {image_path}")
 
         objects = recognize_objects(image_path)
@@ -66,6 +68,9 @@ Answer example: {"NextServoMotor": [{"Horizontal": -60, "Vertical": -30},{"Horiz
             "SeenObjects": objects,
         }
         self.append_prompt(Role.USER, json.dumps(content))
+
+    def close(self):
+        self._camera.close()
 
     def call_gpt(self) -> str:
         logger.info("Start OpenAI API call.")

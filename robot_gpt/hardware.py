@@ -40,6 +40,6 @@ def angle(horizontal: int, vertical: int, gpio_horizontal: int = 17, gpio_vertic
 
     servo_horizontal.angle = horizontal
     servo_vertical.angle = vertical
-    time.sleep(0.2)
+    time.sleep(0.5)
 
     return servo_horizontal.angle, servo_vertical.angle

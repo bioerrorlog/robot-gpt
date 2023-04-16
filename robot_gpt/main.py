@@ -6,6 +6,7 @@ def main() -> None:
         robot.look()
         robot.recognize()
 
+        # OpenAI API rate limit: 3 / min.
         for i in range(3):
             robot.call_and_recognize()
 

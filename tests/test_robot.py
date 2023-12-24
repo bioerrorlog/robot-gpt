@@ -43,15 +43,14 @@ def test_recognize(mocker):
         assert last_prompt["role"] == Role.USER.value
 
 
-@ pytest.mark.chatgpt
+@ pytest.mark.gpt
 def test_call_gpt(mocker):
-    """Warning: The ChatGPT API will be actually called. The API Key is required."""
+    """Warning: The GPT API will be actually called. The API Key is required."""
     with RobotGPT() as robot:
         mocker.patch("robot_gpt.hardware.Camera.capture_image", return_value="./outputs/captured_image.jpg")
-        mocker.patch("robot_gpt.hardware.recognize_objects", return_value=["skeaker", "pcmonitor", "keyboard"])
         robot.recognize()
 
-        response = robot.call_gpt()
+        response = robot.call_gpt4v()
 
         # Response can be parsed in JSON
         json_response = json.loads(response)

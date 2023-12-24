@@ -103,20 +103,6 @@ Answer example:
 
         return content
 
-    def call_gpt(self) -> str:
-        logger.info("Start OpenAI API call.")
-        logger.info(f"Prompts: {self.prompts}")
-        response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=self.prompts
-        )
-        content = response.choices[0].message.content
-        logger.info(f"Response content: {content}")
-
-        self.append_prompt(Role.ASSISTANT, content)
-
-        return content
-
     def call_and_recognize(self):
         response = self.call_gpt4()
         json_response = json.loads(response)
@@ -131,4 +117,4 @@ Answer example:
         self.append_prompt(Role.USER, message)
         self.append_prompt(Role.SYSTEM, "You can answer in free format only once.")
 
-        return self.call_gpt()
+        return self.call_gpt4v()

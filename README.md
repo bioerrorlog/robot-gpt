@@ -27,8 +27,8 @@ pip install -r requirements-dev.txt
 # Run camera tests (require a connected camera)
 pytest -m 'camera'
 
-# Run ChatGPT API tests (Warning: The ChatGPT API will be actually called. The API Key is required.)
-pytest -s -m 'chatgpt'
+# Run GPT API tests (Warning: The GPT API will be actually called. The API Key is required.)
+pytest -s -m 'gpt'
 
 # Run servo moter tests (require connected servo motors)
 pytest -m 'servo'

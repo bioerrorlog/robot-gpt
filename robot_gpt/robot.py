@@ -2,13 +2,14 @@ import os
 import json
 import logging
 from enum import Enum
-import openai
+from openai import OpenAI
 from robot_gpt.hardware import (
     Camera,
     angle,
 )
+from robot_gpt.image import img_to_base64
 
-openai.api_key = os.environ["OPENAI_API_KEY"]
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -28,13 +29,17 @@ class RobotGPT:
     def __init__(self, horizontal: int = 0, vertical: int = 0):
         self._prompts = [
             {"role": Role.SYSTEM.value, "content": """You are a robot with a camera, composed of 2 servo motors: horizontal & vertical.
+You can freely describe and feel your surrounding environments, and decide next your action based on the image you captured.
+
 Horizontal: min -90 right, max 90 left.
 Vertical: min -90 down, max 90 up.
 Your behavior principles: [curiosity, inquisitiveness, playfulness].
-Your answer MUST be in this JSON format: {"NextServoMotor": {"Horizontal": int(-90~90), "Vertical": int(-90~90)}, "FreeTalk": string}
+
+Your answer MUST be in this JSON format:
+{"FreeTalk": string, "NextServoMotor": {"Horizontal": int(-90~90), "Vertical": int(-90~90)}}
 
 Answer example:
-{"NextServoMotor": {"Horizontal": -60, "Vertical": -30}, "FreeTalk": "Based on what I've seen, I'm curious about the PC and mouse. I wonder what you use them for and what kind of work or play they are involved in?"}
+{"FreeTalk": "Based on what I've seen, I'm curious about the PC and mouse. I wonder what you use them for and what kind of work or play they are involved in? Let's look more on the lower right.", "NextServoMotor": {"Horizontal": -60, "Vertical": -30}}
 """},
         ]
         self._horizontal = horizontal
@@ -65,20 +70,44 @@ Answer example:
         self._camera.capture_image(image_path)
         logger.info(f"Image captured: {image_path}")
 
+        base64_string = img_to_base64(image_path)
+
         content = {
-            "CurrentServoMotor": {"Horizontal": self._horizontal, "Vertical": self._vertical},
+            "role": "user",
+            "content": [
+                    {
+                        "type": "image_url",
+                        "image_url": {
+                            "url": base64_string,
+                            "detail": "low"
+                        }
+                    },
+            ],
         }
-        self.append_prompt(Role.USER, json.dumps(content))
+        self._prompt.append(content)
 
     def close(self):
         self._camera.close()
 
+    def call_gpt4v(self) -> str:
+        logger.info("Start GPT-4V API call.")
+        logger.info(f"Prompts: {self.prompts}")
+        response = client.chat.completions.create(
+            model="gpt-4-vision-preview",
+            messages=self.prompts
+        )
+        content = response.choices[0].message.content
+        logger.info(f"Response content: {content}")
+
+        self.append_prompt(Role.ASSISTANT, content)
+
+        return content
+
     def call_gpt(self) -> str:
         logger.info("Start OpenAI API call.")
         logger.info(f"Prompts: {self.prompts}")
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-3.5-turbo",
-            temperature=0.2,
             messages=self.prompts
         )
         content = response.choices[0].message.content
@@ -89,7 +118,7 @@ Answer example:
         return content
 
     def call_and_recognize(self):
-        response = self.call_gpt()
+        response = self.call_gpt4()
         json_response = json.loads(response)
 
         for next_servo_motor in json_response['NextServoMotor']:

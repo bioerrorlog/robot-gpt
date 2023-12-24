@@ -1,8 +1,7 @@
 import os
 import time
-from typing import List, Tuple
+from typing import Tuple
 from picamera2 import Picamera2
-from imageai.Detection import ObjectDetection
 from gpiozero import AngularServo
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -19,19 +18,6 @@ class Camera:
 
     def close(self):
         self.picam2.close()
-
-
-def recognize_objects(image_path: str) -> List[str]:
-    detector = ObjectDetection()
-    detector.setModelTypeAsTinyYOLOv3()
-    detector.setModelPath(MODEL_PATH)
-    detector.loadModel()
-
-    detections = detector.detectObjectsFromImage(
-        input_image=image_path, output_type="array")
-
-    objects_name_list = [i["name"] for i in detections[1]]
-    return objects_name_list
 
 
 def angle(horizontal: int, vertical: int, gpio_horizontal: int = 17, gpio_vertical: int = 18) -> Tuple[int, int]:

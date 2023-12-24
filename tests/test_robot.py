@@ -55,7 +55,6 @@ def test_call_gpt(mocker):
 
         # Response can be parsed in JSON
         json_response = json.loads(response)
-        assert len(json_response['NextServoMotor']) == 5
-        assert isinstance(json_response['NextServoMotor'][0]['Horizontal'], int)
-        assert isinstance(json_response['NextServoMotor'][0]['Vertical'], int)
+        assert isinstance(json_response['NextServoMotor']['Horizontal'], int)
+        assert isinstance(json_response['NextServoMotor']['Vertical'], int)
         assert isinstance(json_response['FreeTalk'], str)

@@ -5,7 +5,6 @@ from enum import Enum
 import openai
 from robot_gpt.hardware import (
     Camera,
-    recognize_objects,
     angle,
 )
 
@@ -28,14 +27,14 @@ class Role(Enum):
 class RobotGPT:
     def __init__(self, horizontal: int = 0, vertical: int = 0):
         self._prompts = [
-            {"role": Role.SYSTEM.value, "content": """
-You are a robot with a camera, composed of 2 servo motors: horizontal & vertical.
+            {"role": Role.SYSTEM.value, "content": """You are a robot with a camera, composed of 2 servo motors: horizontal & vertical.
 Horizontal: min -90 right, max 90 left.
 Vertical: min -90 down, max 90 up.
 Your behavior principles: [curiosity, inquisitiveness, playfulness].
-Your answer MUST be in this JSON format: {"NextServoMotor": [{"Horizontal": int(-90~90), "Vertical": int(-90~90)}], "FreeTalk": string}
-Constraint: len(your_answer["NextServoMotor"]) == 5
-Answer example: {"NextServoMotor": [{"Horizontal": -60, "Vertical": -30},{"Horizontal": 0, "Vertical": 0},{"Horizontal": 90, "Vertical": -45},{"Horizontal": 0, "Vertical": 60},{"Horizontal": -30, "Vertical": -60}],"FreeTalk": "Based on what I've seen, I'm curious about the PC and mouse. I wonder what you use them for and what kind of work or play they are involved in?"}
+Your answer MUST be in this JSON format: {"NextServoMotor": {"Horizontal": int(-90~90), "Vertical": int(-90~90)}, "FreeTalk": string}
+
+Answer example:
+{"NextServoMotor": {"Horizontal": -60, "Vertical": -30}, "FreeTalk": "Based on what I've seen, I'm curious about the PC and mouse. I wonder what you use them for and what kind of work or play they are involved in?"}
 """},
         ]
         self._horizontal = horizontal
@@ -66,12 +65,8 @@ Answer example: {"NextServoMotor": [{"Horizontal": -60, "Vertical": -30},{"Horiz
         self._camera.capture_image(image_path)
         logger.info(f"Image captured: {image_path}")
 
-        objects = recognize_objects(image_path)
-        logger.info(f"Objects detected: {objects}")
-
         content = {
             "CurrentServoMotor": {"Horizontal": self._horizontal, "Vertical": self._vertical},
-            "SeenObjects": objects,
         }
         self.append_prompt(Role.USER, json.dumps(content))
 

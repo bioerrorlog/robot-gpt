@@ -30,6 +30,7 @@ class RobotGPT:
         self._prompts = [
             {"role": Role.SYSTEM.value, "content": """You are a robot with a camera, composed of 2 servo motors: horizontal & vertical.
 You can freely describe and feel your surrounding environments, and decide next your action based on the image you captured.
+DO NOT use double quotes in your answer sentence.
 
 Horizontal: min -90 right, max 90 left.
 Vertical: min -90 down, max 90 up.

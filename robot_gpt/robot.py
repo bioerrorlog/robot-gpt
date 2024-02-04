@@ -95,7 +95,8 @@ Answer example:
         logger.info(f"Prompts: {self.prompts}")
         response = client.chat.completions.create(
             model="gpt-4-vision-preview",
-            messages=self.prompts
+            messages=self.prompts,
+            max_tokens=1200,
         )
         content = response.choices[0].message.content
         logger.info(f"Response content: {content}")

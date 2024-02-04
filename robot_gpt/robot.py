@@ -84,7 +84,7 @@ Answer example:
                     },
             ],
         }
-        self._prompt.append(content)
+        self._prompts.append(content)
 
     def close(self):
         self._camera.close()

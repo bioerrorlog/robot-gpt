@@ -107,13 +107,15 @@ Answer example:
 
     def call_and_recognize(self):
         response = self.call_gpt4v()
-        json_response = json.loads(response)
 
-        for next_servo_motor in json_response['NextServoMotor']:
-            self._next_horizontal = next_servo_motor['Horizontal']
-            self._next_vertical = next_servo_motor['Vertical']
-            self.look()
-            self.recognize()
+        json_response = json.loads(response)
+        next_servo_motor = json_response['NextServoMotor']
+
+        self._next_horizontal = next_servo_motor['Horizontal']
+        self._next_vertical = next_servo_motor['Vertical']
+
+        self.look()
+        self.recognize()
 
     def talk(self, message: str) -> str:
         self.append_prompt(Role.USER, message)

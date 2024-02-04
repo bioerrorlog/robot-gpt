@@ -104,7 +104,7 @@ Answer example:
         return content
 
     def call_and_recognize(self):
-        response = self.call_gpt4()
+        response = self.call_gpt4v()
         json_response = json.loads(response)
 
         for next_servo_motor in json_response['NextServoMotor']:

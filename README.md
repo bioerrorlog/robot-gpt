@@ -36,3 +36,8 @@ pytest -m 'servo'
 # Run the all tests
 pytest -m ''
 ```
+
+## Blog posts
+
+- [Making LLM the Brain of a Robot - Part 1: Combining a Camera/Servo Motor with GPT - BioErrorLog Tech Blog](https://en.bioerrorlog.work/entry/robot-gpt-prototype)
+- [Combining GPT-4 Vision with Raspberry Pi | Making GPT the Brain of a Robot, Part 2 - BioErrorLog Tech Blog](https://en.bioerrorlog.work/entry/robot-gpt-4-vision)
